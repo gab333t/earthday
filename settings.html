@@ -7,6 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="settings.css">
+        <link rel="icon" type="image/x-icon" href="img/favicon_light.ico">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +20,7 @@
 
         <div class="navigation">
             <div class="logo">
+                <img id="logo-icon" src="img/logo_white.png" alt="Outlet Logo" draggable="false">
                 <h4 class="bold">Outlet</h4>
                 <br><br>
             </div>
@@ -51,7 +53,32 @@
             </div>
         </div>
 
-        <div class="alert"></div>
+        <div class="alert-item">
+            <a href="index.html">
+                <img id="alert" src="img/alert_white.png" alt="Alert Icon" draggable="false">
+            </a>
+            <div class="alert-circle"></div>
+            <div class="alert-bg"></div>
+        </div>
 
     </body>
+
+    <script>
+        function setFavicon() {
+            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
+    
+            let favicon = document.querySelector("link[rel='icon']");
+            if (!favicon) {
+                favicon = document.createElement('link');
+                favicon.rel = 'icon';
+                document.head.appendChild(favicon);
+            }
+            favicon.href = faviconPath;
+        }
+    
+        setFavicon();
+    
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+    </script>
 </html>

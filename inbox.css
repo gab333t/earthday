@@ -19,7 +19,7 @@ hr {
     background-color: #282FFF;
     margin-left: 12.5vw;
     margin-right: 5vw;
-    margin-top: -100px;
+    margin-top: -90px;
 }
 
 .report-container {
@@ -42,6 +42,11 @@ hr {
     transform: scale(1.075);
 }
 
+#logo-icon {
+    width: 6vw;
+    height: auto;
+}
+
 #comm, #notif, #settings, #map {
     width: 3.5vw;
     height: auto;
@@ -52,6 +57,51 @@ hr {
 #comm:hover, #map:hover, #notif:hover, #settings:hover {
     transform: scale(1.075);
     cursor: pointer;
+}
+
+.alert-item {
+    position: fixed;
+    left: 2vw;
+    bottom: -10px;
+    width: 140px;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#alert {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    bottom: -25px;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    transform-origin: center center;
+    z-index: 5;
+}
+
+#alert:hover {
+    transform: translate(-50%, -50%) scale(1.075);
+    cursor: pointer;
+}
+
+.alert-circle {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    background-color: #282FFF;
+    border-radius: 50%;
+    z-index: 4;
+}
+
+.alert-bg {
+    position: absolute;
+    height: 140px;
+    width: 140px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 1;
 }
 
 h2 {
@@ -76,17 +126,6 @@ h2 {
     background-color: #282FFF;
     color: white;
     text-align: center;
-}
-
-.alert {
-    position: fixed;
-    left: 2vw;
-    bottom: -15px;
-    height: 120px;
-    width: 120px;
-    background-color: #282FFF;
-    border-radius: 50%;
-    border: 20px solid white;
 }
 
 h4 {
@@ -226,14 +265,6 @@ h5 {
         width: 12.5vw;
     }
 
-    .alert {
-        height: 125px;
-        width: 125px;
-        left: 5vw;
-        bottom: -10px;
-        border: 20px solid white;
-    }
-
     #comm, #notif, #settings, #map {
         width: 5vw;
     }
@@ -338,14 +369,33 @@ h5 {
         transform: scale(1);
     }
 
-    .alert {
+    #alert:hover {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .alert-item {
         left: 0;
         right: 0;
         margin: auto;
         height: 100px;
         width: 100px;
-        bottom: 5px;
-        border: 12.5px solid white;
+        bottom: 25px;
+    }
+
+    #alert {
+        width: 90px;
+        height: 90px;
+        bottom: -35px;
+    }
+
+    .alert-circle {
+        width: 100px;
+        height: 100px;
+    }
+
+    .alert-bg {
+        width: 120px;
+        height: 120px;
     }
 
     h4 {
@@ -442,9 +492,16 @@ h5 {
         background-color: #FFC800;
     }
 
-    .alert {
+    .alert-circle {
         background-color: #FFC800;
-        border: 12.5px solid rgb(18, 18, 18);
+    }
+
+    .alert-bg {
+        background-color: rgb(18, 18, 18);
+    }
+
+    #logo-icon {
+        content: url("img/logo_black.png");
     }
 
     #comm {
@@ -465,6 +522,10 @@ h5 {
 
     #report {
         content: url("img/report_dark.png");
+    }
+
+    #alert {
+        content: url("img/alert_black.png")
     }
 }
 
