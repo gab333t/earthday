@@ -427,6 +427,14 @@ h5 {
         margin-right: 10px;
     }
 
+    #pfp-lineup {
+        width: 9.5vw;
+        height: auto;
+        margin-bottom: -1.25vw;
+        margin-left: -1.5vw;
+        margin-right: -0.5vw;
+    }
+
     h5 {
         font-size: 3vw;
         letter-spacing: 0.02vw;
