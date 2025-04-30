@@ -1,0 +1,484 @@
+body {
+    background-color: white;
+}
+
+h1 {
+    font-family: "Instrument Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 140px;
+    font-weight: 700;
+    margin-left: 12.5vw;
+    margin-top: 20px;
+    letter-spacing: -1px;
+    color: black;
+}
+
+hr {
+    height: 7.5px;
+    border: none;
+    background-color: #282FFF;
+    margin-left: 12.5vw;
+    margin-right: 5vw;
+    margin-top: -100px;
+}
+
+.report-container {
+    display: flex;
+    align-items: center;
+    margin-left: 12vw;
+    margin-bottom: -20px;
+}
+
+#report {
+    width: 60px;
+    height: auto;
+    margin-right: 5px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    transform-origin: center center;
+}
+
+#report:hover {
+    transform: scale(1.075);
+}
+
+#logo-icon {
+    width: 6vw;
+    height: auto;
+}
+
+#comm, #notif, #settings, #map {
+    width: 3.5vw;
+    height: auto;
+    transition: all 0.3s ease;
+    transform-origin: center center;
+}
+
+#comm:hover, #map:hover, #notif:hover, #settings:hover {
+    transform: scale(1.075);
+    cursor: pointer;
+}
+
+h2 {
+    font-family: "Instrument Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 30px;
+    font-weight: 550;
+    letter-spacing: -1px;
+    color: black;
+}
+
+#subhead {
+    margin-left: 12.5vw;
+}
+
+.navigation {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 7.5vw;
+    background-color: #282FFF;
+    color: white;
+    text-align: center;
+}
+
+.alert {
+    position: fixed;
+    left: 2vw;
+    bottom: -15px;
+    height: 120px;
+    width: 120px;
+    background-color: #282FFF;
+    border-radius: 50%;
+    border: 20px solid white;
+}
+
+h4 {
+    font-family: "Instrument Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 1vw;
+    font-weight: 400;
+    letter-spacing: 0.01vw;
+    margin-top: -0.05vw;
+}
+
+.logo {
+    margin-top: 2vw;
+}
+
+.bold {
+    font-weight: 625;
+    letter-spacing: 0.25px;
+    display: block;
+}
+
+#topbold {
+    margin-bottom: 7.5px;
+}
+
+.box-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 12.5vw;
+    margin-right: 5vw;
+    margin-top: 25px;
+    gap: 20px;
+}
+
+.box {
+    flex: 0 0 calc(50% - 10px);
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.3s ease;
+}
+
+.box:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+    box-shadow: 
+        2px 12px 18px rgba(0, 0, 0, 0.15);
+}
+
+.box-content {
+    display: flex;
+    align-items: center;
+    padding: 22.5px 5px;
+}
+
+.box-content img {
+    width: 100px;
+    height: auto;
+    margin-right: 5px;
+    flex-shrink: 0;
+}
+
+h5 {
+    font-family: "Instrument Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+    padding: 0px 20px 0px 0px;
+    flex-grow: 1; 
+}
+
+#water {
+    background-color: #282FFF;
+    color: white;
+}
+
+#electric {
+    background-color: #FFC800;
+    color: black;
+}
+
+#user {
+    background-color: #E9E9E9;
+}
+
+#blue {
+    display: inline-block;
+    background-color: #282FFF;
+    color: white;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: -7.5px;
+    margin-top: 2px;
+    transition: all ease 0.3s;
+}
+
+#blue:hover {
+    text-decoration: underline;
+}
+
+#yellow {
+    display: inline-block;
+    background-color: #FFC800;
+    color: black;
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: -7.5px;
+    margin-top: 2px;
+    transition: all ease 0.3s;
+}
+
+#yellow:hover {
+    text-decoration: underline;
+}
+
+@media only screen and (max-width: 1000px) {
+    h1 {
+        font-size: 120px;
+        margin-left: 17.5vw;
+    }
+
+    hr {
+        margin-top: -75px;
+        margin-left: 17.5vw;
+    }
+
+    .report-container {
+        margin-left: 17vw;
+    }
+
+    #subhead {
+        margin-left: 17.5vw;
+    }
+    
+    .navigation {
+        width: 12.5vw;
+    }
+
+    .alert {
+        height: 125px;
+        width: 125px;
+        left: 5vw;
+        bottom: -10px;
+        border: 20px solid white;
+    }
+
+    #comm, #notif, #settings, #map {
+        width: 5vw;
+    }
+
+    h4 {
+        font-size: 1.5vw;
+    }
+
+    .box-container {
+        margin-left: 17.5vw;
+        flex-direction: column;
+    }
+
+    .box-content {
+        padding: 20px 10px;
+    }
+
+    .box-content img {
+        width: 95px;
+    }
+    
+    .box {
+        flex: 0 0 100%;
+    }
+
+    h5 {
+        font-size: 17px;
+        line-height: 22px;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    h1 {
+        font-size: 17.5vw;
+        margin-left: 20px;
+        margin-top: 30px;
+    }
+
+    hr {
+        height: 1vw;
+        margin-left: 20px;
+        margin-right: 20px;
+        margin-top: -10vw;
+    }
+
+    .report-container {
+        margin-left: 10px;
+        margin-bottom: -35px;
+    }
+
+    #report {
+        width: 9.5vw;
+    }
+
+    #report:hover {
+        transform: scale(1);
+    }
+
+    h2 {
+        font-size: 6vw;
+        letter-spacing: -0.1vw;
+        font-weight: 600;
+    }
+
+    #subhead {
+        margin-left: 20px;
+    }
+
+    .navigation {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    #comm, #map, #notif, #settings {
+        width: 10vw;
+        height: auto;
+        margin-bottom: 5px;
+    }
+
+    #gap-left {
+        margin-right: 100px;
+    }
+
+    #gap-right {
+        margin-left: 15px;
+    }
+
+    #comm:hover, #map:hover, #notif:hover, #settings:hover {
+        transform: scale(1);
+    }
+
+    .alert {
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: 100px;
+        width: 100px;
+        bottom: 5px;
+        border: 12.5px solid white;
+    }
+
+    h4 {
+        font-size: 12px;
+        letter-spacing: 0.25px;
+        margin-top: -10px;
+        margin-bottom: -15px;
+    }
+
+    .bold {
+        letter-spacing: 0.5px;
+    }
+
+    .box-content {
+        padding: 4vw 2vw;
+    }
+
+    .box-content img {
+        width: 15vw;
+        margin-right: 10px;
+    }
+
+    h5 {
+        font-size: 3vw;
+        letter-spacing: 0.02vw;
+        font-weight: 500;
+        line-height: 3.75vw;
+    }
+
+    .box-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        flex-direction: column;
+    }
+
+    .box {
+        flex: 0 0 100%;
+        border-radius: 12.5px;
+    }
+
+    .box:hover {
+        transform: translateY(0px);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .bold {
+        letter-spacing: 0.05vw;
+    }
+
+    #topbold {
+        margin-bottom: 1vw;
+    }
+
+    .logo {
+        display: none;
+    }
+  }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: rgb(18, 18, 18);
+    }
+
+    h1 {
+        color: white;
+    }
+
+    hr {
+        background-color: #FFC800;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    h4 {
+        color: black;
+    }
+
+    .box {
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 1);
+    }
+
+    .box:hover {
+        box-shadow:  2px 12px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    #user {
+        background-color: #202020;
+        color: white;
+    }
+
+    .navigation {
+        background-color: #FFC800;
+    }
+
+    .alert {
+        background-color: #FFC800;
+        border: 12.5px solid rgb(18, 18, 18);
+    }
+
+    #logo-icon {
+        content: url("img/logo_black.png");
+    }
+
+    #comm {
+        content: url("img/comm_black.png");
+      }
+      
+    #map {
+        content: url("img/map_black.png");
+    }
+      
+    #notif {
+        content: url("img/notif_black.png");
+    }
+      
+    #settings {
+        content: url("img/settings_black.png");
+    }
+
+    #report {
+        content: url("img/report_dark.png");
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: white;;
+    }
+}
