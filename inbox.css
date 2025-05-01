@@ -258,6 +258,21 @@ h5 {
     text-decoration: underline;
 }
 
+#gray {
+    display: inline-block;
+    background-color: #D9D9D9;
+    color: rgb(0, 0, 0);
+    padding: 3px 12px;
+    border-radius: 20px;
+    margin-bottom: -7.5px;
+    margin-top: 2px;
+    transition: all ease 0.3s;
+}
+
+#gray:hover {
+    text-decoration: underline;
+}
+
 @media only screen and (max-width: 1000px) {
     h1 {
         font-size: 120px;
@@ -435,7 +450,13 @@ h5 {
 
     .box-content img {
         width: 15vw;
-        margin-right: 10px;
+        margin-right: 2.5vw;
+    }
+
+    #gabepfp, #rachelpfp, #gracepfp, #leepfp {
+        width: 12.5vw;
+        margin-left: 1vw;
+        margin-right: 3.5vw;
     }
 
     #pfp-lineup {
@@ -518,6 +539,11 @@ h5 {
 
     .navigation {
         background-color: #FFC800;
+    }
+
+    #gray {
+        background-color: #3f3f3f;
+        color: white;
     }
 
     .alert-circle {

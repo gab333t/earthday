@@ -296,7 +296,7 @@ h5 > img, h5 input {
 
 #red {
     display: inline-block;
-    background-color: #d5221f;
+    background-color: #e50606;
     color: white;
     padding: 3px 12px;
     border-radius: 20px;
@@ -304,7 +304,7 @@ h5 > img, h5 input {
 
 #green {
     display: inline-block;
-    background-color: #85d67b;
+    background-color: #64d155;
     color: black;
     padding: 3px 12px;
     border-radius: 20px;
@@ -510,6 +510,10 @@ h5 > img, h5 input {
         font-weight: 500;
         line-height: 3.75vw;
         margin-left: 2.5px;
+    }
+
+    #abbypfp, #davidpfp, #henrypfp, #zhupfp, #danielpfp, #fernandopfp, #gabepfp, #ericapfp {
+        width: 12.5vw;
     }
 
     #reply {
