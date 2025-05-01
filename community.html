@@ -15,19 +15,24 @@
     </head>
     <body>
 
+        <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+
         <h1>Community</h1>
         <hr>
 
         <div class="report-container">
             <img id="report" src="img/report_light.png" alt="Report Button" draggable="false">
             <h2>Make a Post</h2>
+            &nbsp;&nbsp;&nbsp;&nbsp;
             <img id="report" src="img/report_light.png" alt="Report Button" draggable="false">
-
-            <h2>Sort by Filters</h2>
+            <h2>Filter</h2>
         </div>
 
         <br>
-        <h2 id="subhead">Recent Posts</h2>
+        <h2 id="subhead">Today's Posts</h2>
 
         <div class="box-container">
 
@@ -43,7 +48,7 @@
                         <div class="post-content">
                         <h5>
                             power outage in my neighborhood rn, does anyone have a backup generator? no one can see a thing out here<br>
-                            <img class="post-image" src="img/abbyoutage.webp">   
+                            <img class="post-image" src="img/abbyoutage.webp" alt="Picture of Abby's neighborhood; lights are completely out, and the image is heavily obscured. She is requesting a generator to temporarily restore power." draggable="false">   
                             <input type="text" id="reply" placeholder="Reply to Abby K..."> 
                         </h5>
                         </div>
@@ -53,7 +58,7 @@
 
             <div class="box" id="user">
                 <div class="box-content">
-                    <img id="davidpfp" src="img/davidpfp_white.png" alt="Abby K.'s PFP" draggable="false">
+                    <img id="davidpfp" src="img/davidpfp_white.png" alt="David L.'s PFP" draggable="false">
                     <h5>
                         <span class="bold" id="topbold">david Lee<br>Today at 8:56 PM<br></span>
                         <div class="tag-container">
@@ -62,8 +67,8 @@
 
                         <div class="post-content">
                         <h5>
-                            I got a few spare water bottles for anyone who needs them &nbsp;&nbsp;&nbsp; HMU<br>
-                            <img class="post-image" src="img/davidoutage.jpeg">   
+                            Got a few spare water bottles for anyone who needs them &nbsp;&nbsp;&nbsp; HMU<br>
+                            <img class="post-image" src="img/davidoutage.jpeg" alt="Picture of David's case of water bottles, offering to provide them for the community." draggable="false">   
                             <input type="text" id="reply" placeholder="Reply to david Lee...">    
                         </h5>
                         </div>
@@ -83,8 +88,113 @@
                         <div class="post-content">
                         <h5>
                             For anyone who needs help with any plumbing or electrician work, ill be glad to assist :) Just got my toolkit in<br>
-                            <img class="post-image" src="img/henryoutage1.jpg">
+                            <img class="post-image" src="img/henryoutage1.jpg" alt="Picture of Henry's toolkit, and his supplies for plumbing and wireworking. He is offering repair to anyone who might need it.">
                             <input type="text" id="reply" placeholder="Reply to Henry C...">    
+                        </h5>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="box" id="user">
+                <div class="box-content">
+                    <img id="zhupfp" src="img/zhupfp_white.png" alt="C. Zhu's PFP" draggable="false">
+                    <h5>
+                        <span class="bold" id="topbold">C. Zhu<br>Today at 7:01 PM<br></span>
+                        <div class="tag-container">
+                            <span class="bold" id="yellow">Electricity</span><br><span class="bold" id="green">Offering Help</span>
+                        </div>
+
+                        <div class="post-content">
+                        <h5>
+                            Hey would anyone like this portable stove? trying to get it off my hands and would like for it to go to good use<br>
+                            <img class="post-image" src="img/zhuoutage.jpg" alt="C. Zhu's portable stove, with moderate wear and use. She is asking if anyone would like to take it off her hands for free.">
+                            <input type="text" id="reply" placeholder="Reply to C. Zhu...">    
+                        </h5>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+
+            
+            <div class="box" id="user">
+                <div class="box-content">
+                    <img id="danielpfp" src="img/danielpfp_white.png" alt="daniel f's PFP" draggable="false">
+                    <h5>
+                        <span class="bold" id="topbold">daniel f<br>Today at 6:36 PM<br></span>
+                        <div class="tag-container">
+                            <span class="bold" id="yellow">Electricity</span><br>
+                        </div>
+
+                        <div class="post-content">
+                        <h5>
+                            just wanna know if the faulty service in the area is just me?? haven't seen any news coverage about it<br>
+                            <input type="text" id="reply" placeholder="Reply to daniel f...">    
+                        </h5>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="box" id="user">
+                <div class="box-content">
+                    <img id="fernandopfp" src="img/fernandopfp_white.png" alt="fernando G." draggable="false">
+                    <h5>
+                        <span class="bold" id="topbold">fernando G.<br>Today at 5:20 PM<br></span>
+                        <div class="tag-container">
+                            <span class="bold" id="red">Seeking Help</span><br>
+                        </div>
+
+                        <div class="post-content">
+                        <h5>
+                            Anyone know of good community service groups to work for? I want to help out in some way<br>
+                            <input type="text" id="reply" placeholder="Reply to fernando G...">    
+                        </h5>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 id="subhead">Last 30 Days</h2>
+
+        <div class="box-container">
+
+            <div class="box" id="user">
+                <div class="box-content">
+                    <img id="gabepfp" src="img/gabepfp_white.png" alt="gabe t.'s PFP" draggable="false">
+                    <h5>
+                        <span class="bold" id="topbold">gabe t.<br>Yesterday at 9:32 PM<br></span>
+                        <div class="tag-container">
+                            <span class="bold" id="yellow">Electricity</span><br><span class="bold" id="red">Seeking Help</span><br> 
+                        </div>
+                               
+                        <div class="post-content">
+                        <h5>
+                            there was a power outage earlier while my pc was running and now it wont turn on, anyone know any fixes? or would i need to send it in for repair<br>
+                            <img class="post-image" src="img/gabeoutage.webp" alt="Picture of Gabe's PC; it appears to have sustained internal damage after a power outage. He is inquiring about what needs to be done to power it back on." draggable="false">   
+                            <input type="text" id="reply" placeholder="Reply to gabe t..."> 
+                        </h5>
+                        </div>
+                    </h5>
+                </div>
+            </div>
+
+            <div class="box" id="user">
+                <div class="box-content">
+                    <img id="ericapfp" src="img/ericapfp_white.png" alt="Erica C's PFP" draggable="false">
+                    <h5>
+                        <span class="bold" id="topbold">Erica C<br>Yesterday at 9:32 PM<br></span>
+                        <div class="tag-container">
+                            <span class="bold" id="yellow">Electricity</span><br><span class="bold" id="blue">Water</span><br> 
+                        </div>
+                               
+                        <div class="post-content">
+                        <h5>
+                            Good news ! the community fundraiser was a HUGE success over the weekend, and we had many great volunteers help out with water and electric damages. Keep it up !<br>
+                            <img class="post-image" src="img/ericaoutage.jpg" alt="Picture of Gabe's PC; it appears to have sustained internal damage after a power outage. He is inquiring about what needs to be done to power it back on." draggable="false">   
+                            <input type="text" id="reply" placeholder="Reply to Erica C..."> 
                         </h5>
                         </div>
                     </h5>
@@ -157,5 +267,34 @@
         setFavicon();
     
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+        const closeBtn = document.getElementsByClassName("close")[0];
+        
+        const postImages = document.getElementsByClassName("post-image");
+        for (let i = 0; i < postImages.length; i++) {
+            postImages[i].addEventListener("click", function(e) {
+                e.stopPropagation();
+                modal.style.display = "flex";
+                modalImg.src = this.src;
+            });
+        }
+        
+        closeBtn.addEventListener("click", function() {
+            modal.style.display = "none";
+        });
+        
+        modal.addEventListener("click", function(e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+        
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "Escape" && modal.style.display === "flex") {
+                modal.style.display = "none";
+            }
+        });
     </script>
 </html>

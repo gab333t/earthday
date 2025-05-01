@@ -207,7 +207,7 @@ h5 {
     flex-grow: 1; 
 }
 
-#gabepfp, #rachelpfp, #gracepfp {
+#gabepfp, #rachelpfp, #gracepfp, #leepfp {
     width: 80px;
     height: auto;
     margin-left: 10px;
@@ -300,6 +300,10 @@ h5 {
 
     .box-content img {
         width: 95px;
+    }
+
+    #gabepfp, #rachelpfp, #gracepfp, #leepfp {
+        width: 75px;
     }
     
     .box {
@@ -549,23 +553,23 @@ h5 {
     }
 
     #alert {
-        content: url("img/alert_black.png")
+        content: url("img/alert_black.png");
     }
 
-    .line-one {
-        content: url("img/pfp_lineup1_black.png")
+    #gabepfp {
+        content: url("img/gabepfp_black.png");
     }
 
-    .line-two {
-        content: url("img/pfp_lineup2_black.png")
+    #rachelpfp {
+        content: url("img/rachelpfp_black.png");
     }
 
-    .line-three {
-        content: url("img/pfp_lineup3_black.png")
+    #gracepfp {
+        content: url("img/gracepfp_black.png");
     }
 
-    .line-four {
-        content: url("img/pfp_lineup4_black.png")
+    #leepfp {
+        content: url("img/leepfp_black.png");
     }
 }
 
