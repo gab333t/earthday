@@ -198,6 +198,14 @@ h5 {
     flex-grow: 1; 
 }
 
+.map-box {
+    margin-left: 12.5vw;
+    width: 82.1%;
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 50px;
+}
+
 #water {
     background-color: #282FFF;
     color: white;
@@ -293,6 +301,11 @@ h5 {
     h5 {
         font-size: 17px;
         line-height: 22px;
+    }
+
+    .map-box {
+        margin-left: 17.5vw;
+        width: 77%;
     }
 }
 
@@ -425,6 +438,12 @@ h5 {
         line-height: 3.75vw;
     }
 
+    .map-box {
+        margin-left: 20px;
+        width: 92.25%;
+        border-radius: 20px;
+    }
+
     .box-container {
         margin-left: 20px;
         margin-right: 20px;
@@ -447,6 +466,10 @@ h5 {
 
     #topbold {
         margin-bottom: 1vw;
+    }
+
+    .map-box {
+        content: url("img/map_portrait_white.jpg");
     }
 
     .logo {
@@ -504,6 +527,10 @@ h5 {
         content: url("img/logo_black.png");
     }
 
+    .map-box {
+        content: url("img/map_landscape_black.jpg");
+    }
+
     #comm {
         content: url("img/comm_black.png");
       }
@@ -528,6 +555,13 @@ h5 {
         content: url("img/alert_black.png")
     }
 }
+
+@media (prefers-color-scheme: dark) and (max-width: 600px) {
+    .map-box {
+        content: url("img/map_portrait_black.jpg");
+    }
+}
+
 
 @media (prefers-color-scheme: light) {
     body {
