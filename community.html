@@ -253,6 +253,32 @@
             <img class="modal-content" id="modalImg">
         </div>
 
+        <div id="filterModal" class="modal filter-modal">
+            <div class="filter-container">
+            <span class="close filter-close">&times;</span>
+            <h3 class="filter-title">Filter Posts by Tags</h3>
+            <div class="filter-options">
+                <div class="filter-option">
+                <input type="checkbox" id="filterRed" checked>
+                <label for="filterRed"><span class="tag-preview" id="red-preview">Seeking Help</span></label>
+                </div>
+                <div class="filter-option">
+                <input type="checkbox" id="filterGreen" checked>
+                <label for="filterGreen"><span class="tag-preview" id="green-preview">Offering Help</span></label>
+                </div>
+                <div class="filter-option">
+                <input type="checkbox" id="filterBlue" checked>
+                <label for="filterBlue"><span class="tag-preview" id="blue-preview">Water</span></label>
+                </div>
+                <div class="filter-option">
+                <input type="checkbox" id="filterYellow" checked>
+                <label for="filterYellow"><span class="tag-preview" id="yellow-preview">Electricity</span></label>
+                </div>
+            </div>
+            <button class="filter-apply">Apply Filters</button>
+            </div>
+        </div>
+
     </body>
 
     <script>
@@ -273,57 +299,142 @@
 
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImg");
-        const closeBtn = document.getElementsByClassName("close")[0];
-        
-        function openModal(imgSrc) {
-            modal.style.display = "flex";
-            modalImg.src = imgSrc;
-            modal.style.opacity = "0";
-            modalImg.style.transform = "translateY(20px)";
-            
-            setTimeout(() => {
-                modal.style.opacity = "1";
-                modalImg.style.transform = "translateY(0)";
-            }, 10);
-        }
-        
-        function closeModal() {
-            modalImg.style.transform = "translateY(20px)";
-            modal.style.opacity = "0";
-            
-            setTimeout(() => {
-                modal.style.display = "none";
-            }, 300);
-        }
-        
-        const postImages = document.querySelectorAll(".post-image");
-        postImages.forEach(function(img) {
-            img.addEventListener("click", function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                openModal(this.src);
-            });
-        });
-        
-        closeBtn.addEventListener("click", function(e) {
-            e.preventDefault();
-            closeModal();
-        });
-        
-        modal.addEventListener("click", function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "Escape" && modal.style.display === "flex") {
-                closeModal();
-            }
-        });
+document.addEventListener('DOMContentLoaded', function() {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImg");
+  const closeBtn = document.getElementsByClassName("close")[0];
+  
+  function openModal(imgSrc) {
+    modal.style.display = "flex";
+    modalImg.src = imgSrc;
+    modal.style.opacity = "0";
+    modalImg.style.transform = "translateY(20px)";
+    
+    setTimeout(() => {
+      modal.style.opacity = "1";
+      modalImg.style.transform = "translateY(0)";
+    }, 10);
+  }
+  
+  function closeModal() {
+    modalImg.style.transform = "translateY(20px)";
+    modal.style.opacity = "0";
+    
+    setTimeout(() => {
+      modal.style.display = "none";
+    }, 300);
+  }
+  
+  const postImages = document.querySelectorAll(".post-image");
+  postImages.forEach(function(img) {
+    img.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal(this.src);
     });
+  });
+  
+  closeBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    closeModal();
+  });
+  
+  modal.addEventListener("click", function(e) {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && modal.style.display === "flex") {
+      closeModal();
+    }
+  });
+  
+  const filterModal = document.getElementById("filterModal");
+  const filterCloseBtn = document.querySelector(".filter-close");
+  const filterBtn = document.getElementById("filter");
+  const applyFilterBtn = document.querySelector(".filter-apply");
+  
+  const filterRedCheckbox = document.getElementById("filterRed");
+  const filterGreenCheckbox = document.getElementById("filterGreen");
+  const filterBlueCheckbox = document.getElementById("filterBlue");
+  const filterYellowCheckbox = document.getElementById("filterYellow");
+  
+  filterBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    filterModal.style.display = "flex";
+    filterModal.style.opacity = "0";
+    
+    const filterContainer = document.querySelector('.filter-container');
+    filterContainer.style.transform = "translateY(20px)";
+    
+    setTimeout(() => {
+      filterModal.style.opacity = "1";
+      filterContainer.style.transform = "translateY(0)";
+    }, 10);
+  });
+  
+  function closeFilterModal() {
+    const filterContainer = document.querySelector('.filter-container');
+    filterContainer.style.transform = "translateY(20px)";
+    filterModal.style.opacity = "0";
+    
+    setTimeout(() => {
+      filterModal.style.display = "none";
+    }, 300);
+  }
+  
+  filterCloseBtn.addEventListener("click", function() {
+    closeFilterModal();
+  });
+  
+  filterModal.addEventListener("click", function(e) {
+    if (e.target === filterModal) {
+      closeFilterModal();
+    }
+  });
+  
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && filterModal.style.display === "flex") {
+      closeFilterModal();
+    }
+  });
+  
+  applyFilterBtn.addEventListener("click", function() {
+    const showRed = filterRedCheckbox.checked;
+    const showGreen = filterGreenCheckbox.checked;
+    const showBlue = filterBlueCheckbox.checked;
+    const showYellow = filterYellowCheckbox.checked;
+    
+    const posts = document.querySelectorAll('.box');
+    
+    posts.forEach(function(post) {
+      const redTag = post.querySelector('#red');
+      const greenTag = post.querySelector('#green');
+      const blueTag = post.querySelector('#blue');
+      const yellowTag = post.querySelector('#yellow');
+      
+      const hasVisibleTag = 
+        (redTag && showRed) || 
+        (greenTag && showGreen) || 
+        (blueTag && showBlue) || 
+        (yellowTag && showYellow);
+      
+      if ((redTag || greenTag || blueTag || yellowTag) && !hasVisibleTag) {
+        post.style.display = "none";
+      } else {
+        post.style.display = "block";
+      }
+      
+      if (!showRed && !showGreen && !showBlue && !showYellow) {
+        post.style.display = "block";
+      }
+    });
+    
+    closeFilterModal();
+  });
+});
     </script>
 </html>
