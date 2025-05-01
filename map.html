@@ -389,7 +389,7 @@ customStyles.textContent = `
 
 .map-pin {
     position: absolute;
-    width: 45px; /* Increased from 30px to 45px */
+    width: 45px;
     height: auto;
     transform: translate(-50%, -100%);
     pointer-events: all;
@@ -404,26 +404,221 @@ customStyles.textContent = `
 
 @media only screen and (max-width: 600px) {
     .map-pin {
-        width: 35px; /* Increased from 24px to 35px for mobile */
+        width: 35px;
     }
 }
 `;
 document.head.appendChild(customStyles);
 
+function createPopupElements() {
+  const overlay = document.createElement('div');
+  overlay.className = 'popup-overlay';
+  overlay.id = 'popupOverlay';
+  document.body.appendChild(overlay);
+  
+  const popup = document.createElement('div');
+  popup.className = 'popup-container';
+  popup.id = 'popupContainer';
+  overlay.appendChild(popup);
+  
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'popup-close';
+  closeBtn.innerHTML = '&times;';
+  closeBtn.setAttribute('aria-label', 'Close popup');
+  popup.appendChild(closeBtn);
+  
+  const content = document.createElement('div');
+  content.className = 'popup-content';
+  content.id = 'popupContent';
+  popup.appendChild(content);
+  
+  closeBtn.addEventListener('click', closePopup);
+  
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) {
+      closePopup();
+    }
+  });
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closePopup();
+    }
+  });
+}
+
+function showPopup(type, pinIndex) {
+  const overlay = document.getElementById('popupOverlay');
+  const popup = document.getElementById('popupContainer');
+  const content = document.getElementById('popupContent');
+  
+  content.innerHTML = '';
+  
+  const electricData = [
+    {
+      location: "0.5 miles away",
+      verifier: "ConEdison",
+      schedule: "Scheduled for 10:30 PM",
+      details: "An electricity outage is scheduled for undergoing renovations underground."
+    },
+    {
+      location: "0.5 miles away",
+      verifier: "Solarworks",
+      schedule: "Scheduled for 10:30 PM",
+      details: "An outage is scheduled to take place for ongoing solar panel renovations."
+    },
+    {
+      location: "0.2 miles away",
+      verifier: "Community Report",
+      schedule: "Since 2:38 PM",
+      details: "Electricity outages near traffic lights. 23 users have reported outages."
+    },
+    {
+      location: "0.6 miles away",
+      verifier: "Community Report",
+      schedule: "Since 2:37 PM",
+      details: "Outages affecting air conditioning units. 15 users have reported outages."
+    },
+    {
+      location: "0.2 miles away",
+      verifier: "Community Report",
+      schedule: "Since 5:38 PM",
+      details: "Outages impacting E-Bike charging stations. 13 users have reported outages."
+    }
+  ];
+  
+  const waterData = [
+    {
+      location: "600 feet away",
+      verifier: "NYC Water Board",
+      schedule: "Scheduled for 2:25 AM",
+      details: "Water is planned to be shut down to restore piping along several apartment units."
+    },
+    {
+      location: "0.3 miles away",
+      verifier: "NYSEFC",
+      schedule: "Scheduled for 5:30 AM",
+      details: "Water supply will be temporarily cut to filter through PFAS chemicals."
+    },
+    {
+      location: "400-500 feet away",
+      verifier: "Community Report",
+      schedule: "Since 12:32 PM",
+      details: "Water outages in homes, sinking and bath units. 27 users have reported outages."
+    },
+    {
+      location: "600 feet away",
+      verifier: "Community Report",
+      schedule: "Since 5:50 PM",
+      details: "Faulty plumbing in outdoor water faucets. 19 users have reported outages."
+    },
+    {
+      location: "0.7 miles away",
+      verifier: "Community Report",
+      schedule: "Since 6:17 PM",
+      details: "Outages causing clogged pipes in restrooms. 9 users have reported outages."
+    },
+    {
+      location: "800 feet away",
+      verifier: "Community Report",
+      schedule: "Since 6:10 PM",
+      details: "Water outages affecting sprinklers in lawns. 4 users have reported outages."
+    }
+  ];
+  
+  const data = type === 'Electricity' ? 
+    electricData[pinIndex % electricData.length] : 
+    waterData[pinIndex % waterData.length];
+  
+  if (type === 'Electricity') {
+    popup.className = 'popup-container electric-popup';
+    
+    const icon = document.createElement('img');
+    icon.src = 'img/electric_black.png';
+    icon.alt = 'Electric symbol';
+    icon.className = 'popup-icon';
+    content.appendChild(icon);
+  } else if (type === 'Water') {
+    popup.className = 'popup-container water-popup';
+    
+    const icon = document.createElement('img');
+    icon.src = 'img/water_white.png';
+    icon.alt = 'Water symbol';
+    icon.className = 'popup-icon';
+    content.appendChild(icon);
+  }
+  
+  const title = document.createElement('h3');
+  title.className = 'popup-title';
+  title.innerHTML = `<span class="bold">${type} Outage</span>`;
+  content.appendChild(title);
+  
+  const details = document.createElement('div');
+  details.className = 'popup-details';
+  
+  const locationInfo = document.createElement('p');
+  locationInfo.innerHTML = `<span class="bold">Location:</span> ${data.location}`;
+  details.appendChild(locationInfo);
+  
+  const statusInfo = document.createElement('p');
+  statusInfo.innerHTML = `<span class="bold">Status:</span> ${data.verifier}`;
+  details.appendChild(statusInfo);
+  
+  const scheduleInfo = document.createElement('p');
+  scheduleInfo.innerHTML = `<span class="bold">Time:</span> ${data.schedule}`;
+  details.appendChild(scheduleInfo);
+  
+  const descriptionInfo = document.createElement('p');
+  descriptionInfo.innerHTML = `<span class="bold">Details:</span> ${data.details}`;
+  details.appendChild(descriptionInfo);
+  
+  content.appendChild(details);
+  
+  const reportBtn = document.createElement('button');
+  reportBtn.className = 'popup-report-btn';
+  
+  if (data.verifier.includes("Community Report")) {
+    reportBtn.innerHTML = '<span class="bold">Report as Resolved</span>';
+  } else {
+    reportBtn.innerHTML = '<span class="bold">Receive Updates</span>';
+  }
+  
+  content.appendChild(reportBtn);
+  
+  overlay.style.display = 'flex';
+  setTimeout(() => {
+    overlay.style.opacity = '1';
+    popup.style.transform = 'translateY(0)';
+  }, 10);
+}
+
+function closePopup() {
+  const overlay = document.getElementById('popupOverlay');
+  const popup = document.getElementById('popupContainer');
+  
+  popup.style.transform = 'translateY(20px)';
+  overlay.style.opacity = '0';
+  
+  setTimeout(() => {
+    overlay.style.display = 'none';
+  }, 300);
+}
+
 createPins();
 applyTransform();
+createPopupElements();
 
 document.querySelectorAll('.map-pin').forEach(pin => {
-    pin.addEventListener('click', function(e) {
-        e.stopPropagation();
-        
-        const isElectric = this.classList.contains('electric-pin');
-        const type = isElectric ? 'Electricity' : 'Water';
-        const id = this.id;
-        const number = id.split('-').pop();
-        
-        alert(`${type} outage at location #${parseInt(number) + 1}`);
-    });
+  pin.addEventListener('click', function(e) {
+    e.stopPropagation();
+    
+    const isElectric = this.classList.contains('electric-pin');
+    const type = isElectric ? 'Electricity' : 'Water';
+    const id = this.id;
+    const pinIndex = parseInt(id.split('-').pop());
+    
+    showPopup(type, pinIndex);
+  });
 });
     </script>
 </html>
