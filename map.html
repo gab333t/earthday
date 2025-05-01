@@ -8,27 +8,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="map.css">
         <link rel="icon" type="image/x-icon" href="img/favicon_light.ico">
-
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
     </head>
     <body>
-
         <h1>Map</h1>
         <hr>
-
         <div class="report-container">
             <img id="report" src="img/report_light.png" alt="Report Button" draggable="false">
             <h2>Sort by Filters</h2>
         </div>
-
         <br>
-
         <img class="map-box" src="img/map_landscape_white.jpg" alt="Map of Manhattan, partially including Brooklyn" draggable="false">
-
         <div class="box-container">
-
             <div class="box" id="electric">
                 <div class="box-content">
                     <img src="img/electric_black.png" alt="Black electric symbol, verified alert." draggable="false">
@@ -38,7 +31,6 @@
                     </h5>
                 </div>
             </div>
-
         <div class="navigation">
             <div class="logo">
                 <img id="logo-icon" src="img/logo_white.png" alt="Outlet Logo" draggable="false">
@@ -73,7 +65,6 @@
                 <h4>Settings</h4>
             </div>
         </div>
-
         <div class="alert-item">
             <a href="index.html">
                 <img id="alert" src="img/alert_white.png" alt="Alert Icon" draggable="false">
@@ -81,14 +72,12 @@
             <div class="alert-circle"></div>
             <div class="alert-bg"></div>
         </div>
-
     </body>
-
     <script>
         function setFavicon() {
             const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
             const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
-    
+   
             let favicon = document.querySelector("link[rel='icon']");
             if (!favicon) {
                 favicon = document.createElement('link');
@@ -97,9 +86,239 @@
             }
             favicon.href = faviconPath;
         }
-    
+   
         setFavicon();
-    
+   
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+
+// Get the map image
+const mapBox = document.querySelector('.map-box');
+const container = document.createElement('div');
+container.className = 'map-container';
+
+// Wrap the map image in a container
+mapBox.parentNode.insertBefore(container, mapBox);
+container.appendChild(mapBox);
+
+// Create zoom controls
+const zoomControls = document.createElement('div');
+zoomControls.className = 'zoom-controls';
+
+const zoomInBtn = document.createElement('button');
+zoomInBtn.className = 'zoom-btn zoom-in';
+zoomInBtn.setAttribute('aria-label', 'Zoom in');
+
+const zoomOutBtn = document.createElement('button');
+zoomOutBtn.className = 'zoom-btn zoom-out';
+zoomOutBtn.setAttribute('aria-label', 'Zoom out');
+
+// Create image elements for zoom buttons
+const zoomInImg = document.createElement('img');
+zoomInImg.src = 'img/zoomin_light.png';
+zoomInImg.className = 'zoom-icon';
+zoomInImg.alt = 'Zoom in';
+zoomInImg.draggable = false;
+
+const zoomOutImg = document.createElement('img');
+zoomOutImg.src = 'img/zoomout_light.png';
+zoomOutImg.className = 'zoom-icon';
+zoomOutImg.alt = 'Zoom out';
+zoomOutImg.draggable = false;
+
+// Add images to buttons
+zoomInBtn.appendChild(zoomInImg);
+zoomOutBtn.appendChild(zoomOutImg);
+
+zoomControls.appendChild(zoomInBtn);
+zoomControls.appendChild(zoomOutBtn);
+container.appendChild(zoomControls);
+
+// Initialize variables for zooming and panning
+let scale = 1;
+const MIN_SCALE = 1;
+const MAX_SCALE = 3;
+let offsetX = 0;
+let offsetY = 0;
+let isDragging = false;
+let startX, startY;
+let currentOffsetX = 0;
+let currentOffsetY = 0;
+
+// Apply initial transform
+function applyTransform() {
+    mapBox.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
+}
+
+// Event listener for zoom in button
+zoomInBtn.addEventListener('click', () => {
+    if (scale < MAX_SCALE) {
+        scale += 0.2;
+        checkBounds();
+        applyTransform();
+    }
+});
+
+// Event listener for zoom out button
+zoomOutBtn.addEventListener('click', () => {
+    if (scale > MIN_SCALE) {
+        scale -= 0.2;
+        checkBounds();
+        applyTransform();
+    }
+});
+
+// Prevent dragging outside bounds
+function checkBounds() {
+    // Calculate max allowed offset based on current scale
+    const maxOffsetX = (scale - 1) * (mapBox.clientWidth / 2) / scale;
+    const maxOffsetY = (scale - 1) * (mapBox.clientHeight / 2) / scale;
+    
+    // Constrain offset values
+    offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX));
+    offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY));
+    
+    // If scale is MIN_SCALE, reset offsets to 0
+    if (scale <= MIN_SCALE) {
+        offsetX = 0;
+        offsetY = 0;
+    }
+}
+
+// Mouse and touch event handlers for panning
+mapBox.addEventListener('mousedown', (e) => {
+    if (scale > MIN_SCALE) {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        currentOffsetX = offsetX;
+        currentOffsetY = offsetY;
+        mapBox.style.cursor = 'grabbing';
+    }
+});
+
+// For touch devices
+mapBox.addEventListener('touchstart', (e) => {
+    if (scale > MIN_SCALE && e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        currentOffsetX = offsetX;
+        currentOffsetY = offsetY;
+        e.preventDefault(); // Prevent scrolling
+    }
+});
+
+// Handle mouse movement
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        const dx = (e.clientX - startX) / scale;
+        const dy = (e.clientY - startY) / scale;
+        
+        offsetX = currentOffsetX + dx;
+        offsetY = currentOffsetY + dy;
+        
+        checkBounds();
+        applyTransform();
+    }
+});
+
+// For touch devices
+document.addEventListener('touchmove', (e) => {
+    if (isDragging && e.touches.length === 1) {
+        const dx = (e.touches[0].clientX - startX) / scale;
+        const dy = (e.touches[0].clientY - startY) / scale;
+        
+        offsetX = currentOffsetX + dx;
+        offsetY = currentOffsetY + dy;
+        
+        checkBounds();
+        applyTransform();
+        e.preventDefault(); // Prevent scrolling
+    }
+});
+
+// Stop dragging
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+    mapBox.style.cursor = 'grab';
+});
+
+document.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+// Set initial cursor style
+if (scale > MIN_SCALE) {
+    mapBox.style.cursor = 'grab';
+}
+
+// Initialize transform
+applyTransform();
+
+// Add mousewheel zoom support
+mapBox.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    
+    // Get mouse position relative to the map
+    const rect = mapBox.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    // Determine zoom direction
+    if (e.deltaY < 0 && scale < MAX_SCALE) { // Zoom in
+        scale += 0.2;
+    } else if (e.deltaY > 0 && scale > MIN_SCALE) { // Zoom out
+        scale -= 0.2;
+    } else {
+        return; // No zoom change needed
+    }
+    
+    checkBounds();
+    applyTransform();
+    
+    // Update cursor style based on zoom level
+    mapBox.style.cursor = scale > MIN_SCALE ? 'grab' : 'default';
+});
+
+// Add double-tap zoom for mobile
+let lastTap = 0;
+mapBox.addEventListener('touchend', (e) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    
+    if (tapLength < 300 && tapLength > 0) {
+        // Double tap detected
+        if (scale < MAX_SCALE) {
+            scale += 0.4; // Slightly bigger zoom for double tap
+        } else {
+            scale = MIN_SCALE; // Reset zoom if already at max
+        }
+        
+        checkBounds();
+        applyTransform();
+        e.preventDefault();
+    }
+    
+    lastTap = currentTime;
+});
+
+// Function to update zoom button icons based on color scheme
+function updateZoomIcons() {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Update zoom in button icon
+    const zoomInIcon = document.querySelector('.zoom-in .zoom-icon');
+    zoomInIcon.src = isDarkMode ? 'img/zoomin_dark.png' : 'img/zoomin_light.png';
+    
+    // Update zoom out button icon
+    const zoomOutIcon = document.querySelector('.zoom-out .zoom-icon');
+    zoomOutIcon.src = isDarkMode ? 'img/zoomout_dark.png' : 'img/zoomout_light.png';
+}
+
+// Initial icon update
+updateZoomIcons();
+
+// Listen for system color scheme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateZoomIcons);
     </script>
 </html>

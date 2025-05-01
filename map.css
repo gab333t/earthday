@@ -198,12 +198,57 @@ h5 {
     flex-grow: 1; 
 }
 
-.map-box {
+.map-container {
+    position: relative;
     margin-left: 12.5vw;
     width: 82.1%;
-    height: auto;
+    overflow: hidden;
+    border-radius: 25px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border-radius: 50px;
+}
+
+.map-box {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    transform-origin: center;
+    transition: transform 0.1s ease-out;
+    will-change: transform;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+.zoom-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 0;
+}
+
+.zoom-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.zoom-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+.zoom-btn:hover {
+    transform: scale(1.075);
+}
+
+.zoom-btn:active {
+    transform: scale(0.95);
 }
 
 #water {
@@ -302,8 +347,8 @@ h5 {
         font-size: 17px;
         line-height: 22px;
     }
-
-    .map-box {
+    
+    .map-container {
         margin-left: 17.5vw;
         width: 77%;
     }
@@ -439,11 +484,7 @@ h5 {
     }
 
     .map-box {
-        margin-left: 20px;
-        margin-right: 20px;
-        width: calc(100% - 40px); 
-        height: auto;
-        border-radius: 20px;
+        content: url("img/map_portrait_white.jpg");
     }
 
     .box-container {
@@ -470,14 +511,27 @@ h5 {
         margin-bottom: 1vw;
     }
 
-    .map-box {
-        content: url("img/map_portrait_white.jpg");
-    }
-
     .logo {
         display: none;
     }
-  }
+    
+    .map-container {
+        margin-left: 20px;
+        margin-right: 20px;
+        width: calc(100% - 40px);
+        border-radius: 20px;
+    }
+    
+    .zoom-controls {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .zoom-icon {
+        width: 7.5vw;
+        height: auto;
+    }
+}
 
 @media (prefers-color-scheme: dark) {
     body {
@@ -535,7 +589,7 @@ h5 {
 
     #comm {
         content: url("img/comm_black.png");
-      }
+    }
       
     #map {
         content: url("img/map_black.png");
@@ -554,7 +608,7 @@ h5 {
     }
 
     #alert {
-        content: url("img/alert_black.png")
+        content: url("img/alert_black.png");
     }
 }
 
@@ -564,9 +618,8 @@ h5 {
     }
 }
 
-
 @media (prefers-color-scheme: light) {
     body {
-        background-color: white;;
+        background-color: white;
     }
 }
