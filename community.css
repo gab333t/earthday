@@ -505,6 +505,13 @@ h5 > img, h5 input {
     font-style: italic;
 }
 
+#reply:focus,
+#postContent:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
 @media only screen and (max-width: 1000px) {
     h1 {
         font-size: 80px;
@@ -783,6 +790,13 @@ h5 > img, h5 input {
     
     .filter-apply:hover {
         text-decoration: underline;
+    }
+
+    #reply:focus,
+    #postContent:focus {
+      outline: none;
+      border: none;
+      box-shadow: none;
     }
 }
 
@@ -1091,6 +1105,31 @@ h5 > img, h5 input {
 #attachImageBtn:hover {
     background-color: #c0c0c0;
 }
+
+.attachment-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#attachImageIcon, #attachLinkIcon {
+  width: 25px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+#attachImageIcon:hover, #attachLinkIcon:hover {
+  transform: scale(1.1);
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+}
   
 .post-submit {
   font-family: "Instrument Sans", sans-serif;
@@ -1163,6 +1202,13 @@ h5 > img, h5 input {
   
   .tag-option label::after {
     border-color: white;
+  }
+
+  #reply:focus,
+  #postContent:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
   }
 }
 
