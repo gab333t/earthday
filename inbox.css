@@ -207,6 +207,13 @@ h5 {
     flex-grow: 1; 
 }
 
+#gabepfp, #rachelpfp, #gracepfp {
+    width: 80px;
+    height: auto;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
 #water {
     background-color: #282FFF;
     color: white;
