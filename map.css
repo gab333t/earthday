@@ -399,8 +399,7 @@ h5 {
 }
 
 .popup-report-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  text-decoration: underline;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -668,6 +667,10 @@ h5 {
       width: 100%;
       text-align: center;
     }
+    
+    .popup-report-btn:hover {
+      text-decoration: underline;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -753,11 +756,11 @@ h5 {
     }
     
     .electric-popup .popup-report-btn:hover {
-      background-color: #111;
+      text-decoration: underline;
     }
     
     .water-popup .popup-report-btn:hover {
-      background-color: #f5f5f5;
+      text-decoration: underline;
     }
 }
 

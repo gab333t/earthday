@@ -195,7 +195,7 @@ h5 {
     font-weight: 400;
     line-height: 24px;
     margin: 0;
-    padding: 0px 20px 0px 0px;
+    padding: 0px 10px 0px 0px;
     overflow: visible;
 }
 
@@ -208,11 +208,27 @@ h5 > img, h5 input {
     max-width: 100%;
 }
 
+#postContent {
+    font-family: "Instrument Sans", sans-serif;
+    font-size: 18px;
+    padding: 15px;
+    border: none;
+    border-radius: 15px;
+    background-color: #D9D9D9;
+    min-height: 120px;
+    height: 120px;
+    resize: none;
+}
+
+#postContent::placeholder {
+    color: #a2a2a2;
+    font-style: italic;
+    font-weight: 625;
+    letter-spacing: -0.25px;
+}
+
 .post-content {
-    clear: both;
-    padding-top: 5px;
     margin-left: 20px;
-    width: 100%;
 }
 
 .post-image {
@@ -221,6 +237,15 @@ h5 > img, h5 input {
     width: 100%;
     cursor: pointer;
     border-radius: 25px;
+}
+
+.post-title {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 625;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: black;
 }
 
 .modal {
@@ -268,9 +293,9 @@ h5 > img, h5 input {
 
 .filter-modal {
     z-index: 101;
-  }
+}
   
-  .filter-container {
+.filter-container {
     background-color: white;
     width: 90%;
     max-width: 400px;
@@ -280,72 +305,110 @@ h5 > img, h5 input {
     transform: translateY(0);
     transition: transform 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
-  }
+}
   
-  .filter-title {
+.filter-title {
     font-family: "Instrument Sans", sans-serif;
     font-size: 24px;
     font-weight: 625;
     margin-top: 0;
     margin-bottom: 20px;
-  }
+}
   
-  .filter-options {
+.filter-options {
     display: flex;
     flex-direction: column;
     gap: 15px;
     margin-bottom: 25px;
-  }
+}
   
-  .filter-option {
+.filter-option {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+    position: relative;
+}
   
-  .filter-option input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+.filter-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
     cursor: pointer;
-  }
+    height: 0;
+    width: 0;
+}
   
-  .filter-option label {
+.filter-option label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
     font-family: "Instrument Sans", sans-serif;
     font-size: 18px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-  }
+}
+
+.filter-option label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #D9D9D9;
+    background-color: #D9D9D9;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+}
+
+.filter-option label::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 50%;
+    margin-top: -9px;
+    width: 6px;
+    height: 12px;
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+    display: none;
+    transition: all 0.2s ease;
+}
+
+.filter-option input[type="checkbox"]:checked + label::after {
+    display: block;
+}
   
-  .tag-preview {
+.tag-preview {
     display: inline-block;
     padding: 3px 12px;
     border-radius: 20px;
     font-weight: 625;
     margin-left: 8px;
-  }
+}
   
-  #red-preview {
+#red-preview {
     background-color: #e50606;
     color: white;
-  }
+}
   
-  #green-preview {
+#green-preview {
     background-color: #64d155;
     color: black;
-  }
+}
   
-  #blue-preview {
+#blue-preview {
     background-color: #282FFF;
     color: white;
-  }
+}
   
-  #yellow-preview {
+#yellow-preview {
     background-color: #FFC800;
     color: black;
-  }
+}
   
-  .filter-apply {
+.filter-apply {
     font-family: "Instrument Sans", sans-serif;
     font-size: 18px;
     font-weight: 625;
@@ -357,18 +420,17 @@ h5 > img, h5 input {
     cursor: pointer;
     transition: all 0.2s ease;
     width: 100%;
-  }
+}
   
-  .filter-apply:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
+.filter-apply:hover {
+    text-decoration: underline;
+}
   
-  .filter-close {
+.filter-close {
     color: black;
     top: 15px;
     right: 20px;
-  }
+}
 
 #water {
     background-color: #282FFF;
@@ -693,19 +755,34 @@ h5 > img, h5 input {
         font-size: 20px;
     }
       
-    .filter-option input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
-          background-color: black;
-    }
-      
     .filter-option label {
         font-size: 16px;
+        padding-left: 26px;
+    }
+      
+    .filter-option label::before {
+        width: 18px;
+        height: 18px;
+        border-radius: 6px;
+        border-color: #D9D9D9;
+        background-color: #D9D9D9;
+    }
+      
+    .filter-option label::after {
+        left: 6px;
+        margin-top: -8px;
+        width: 5px;
+        height: 10px;
+        border-color: black;
     }
       
     .filter-apply {
         font-size: 16px;
         padding: 10px 20px;
+    }
+    
+    .filter-apply:hover {
+        text-decoration: underline;
     }
 }
 
@@ -765,6 +842,17 @@ h5 > img, h5 input {
     #reply::placeholder {
         color: #a2a2a2;
         font-style: italic;
+    }
+
+    .filter-option label::before {
+        border-color: #3f3f3f;
+        background-color: #3f3f3f;
+        border-radius: 8px;
+    }
+      
+    .filter-option label::after {
+        border-color: white;
+        margin-top: -9px;
     }
 
     #logo-icon {
@@ -844,10 +932,284 @@ h5 > img, h5 input {
         background-color: #FFC800;
         color: black;
     }
+    
+    .filter-apply:hover {
+        text-decoration: underline;
+    }
 }
 
 @media (prefers-color-scheme: light) {
     body {
         background-color: white;
     }
+}
+
+/* Make a Post Modal Styles */
+.post-modal {
+  z-index: 101;
+}
+
+.post-container {
+  background-color: white;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 20px;
+  padding: 25px;
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#postContent {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 18px;
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  background-color: #D9D9D9;
+  min-height: 120px;
+  height: 120px;
+  resize: none;
+}
+
+#postContent::placeholder {
+  color: #a2a2a2;
+  font-style: italic;
+}
+
+#charCount {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 14px;
+  text-align: right;
+  margin: -15px 5px 0 0;
+  color: #777;
+}
+
+.tag-selection h4 {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 550;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: black;
+}
+
+.tag-options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+.tag-option {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+}
+
+.post-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.tag-option input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.tag-option label {
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.tag-option label::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border: 2px solid #D9D9D9;
+  background-color: #D9D9D9;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.tag-option label::after {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  margin-top: -9px;
+  width: 6px;
+  height: 12px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  display: none;
+  transition: all 0.2s ease;
+}
+
+.tag-option input[type="checkbox"]:checked + label::after {
+  display: block;
+}
+
+#attachImageBtn {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 550;
+  color: black;
+  background-color: #D9D9D9;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#attachImageBtn:hover {
+    background-color: #c0c0c0;
+}
+  
+.post-submit {
+  font-family: "Instrument Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 625;
+  color: white;
+  background-color: #282FFF;
+  border: none;
+  border-radius: 30px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.post-submit:hover {
+  text-decoration: underline;
+}
+
+.post-close {
+  color: black;
+  top: 15px;
+  right: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .post-container {
+    background-color: #202020;
+    color: white;
+  }
+  
+  .post-close {
+    color: white;
+  }
+  
+  .post-submit {
+    background-color: #FFC800;
+    color: black;
+  }
+  
+  #postContent {
+    background-color: #3f3f3f;
+    color: white;
+  }
+
+  .post-title {
+    color: white;
+  }
+  
+  #attachImageBtn {
+    background-color: #3f3f3f;
+    color: white;
+  }
+  
+  #attachImageBtn:hover {
+    background-color: #4f4f4f;
+  }
+  
+  .tag-selection h4 {
+    color: white;
+  }
+  
+  #charCount {
+    color: #aaa;
+  }
+  
+  .tag-option label::before {
+    border-color: #3f3f3f;
+    background-color: #3f3f3f;
+  }
+  
+  .tag-option label::after {
+    border-color: white;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .post-container {
+    padding: 20px;
+    width: 85%;
+  }
+  
+  .tag-selection h4 {
+    font-size: 16px;
+  }
+  
+  .tag-option label {
+    font-size: 14px;
+    padding-left: 26px;
+  }
+  
+  .tag-option label::before {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+  }
+  
+  .tag-option label::after {
+    left: 6px;
+    margin-top: -8px;
+    width: 5px;
+    height: 10px;
+  }
+  
+  #postContent {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .post-title {
+    font-size: 20px;
+  }
+  
+  #attachImageBtn {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+  
+  .post-submit {
+    font-size: 16px;
+    padding: 10px 20px;
+  }
 }

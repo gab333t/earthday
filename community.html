@@ -278,6 +278,43 @@
             <button class="filter-apply">Apply Filters</button>
             </div>
         </div>
+        
+        <div id="postModal" class="modal post-modal">
+            <div class="post-container">
+              <span class="close post-close">&times;</span>
+              
+              <h3 class="post-title">New Post</h3>
+              
+              <div class="post-form">
+                <textarea id="postContent" placeholder="Type here..."></textarea>
+                <p id="charCount"><span id="currentCount">0</span>/300</p>
+                
+                <div class="tag-options">
+                  <div class="tag-option">
+                    <input type="checkbox" id="tagRed">
+                    <label for="tagRed"><span class="tag-preview" id="red-preview">Seeking Help</span></label>
+                  </div>
+                  <div class="tag-option">
+                    <input type="checkbox" id="tagGreen">
+                    <label for="tagGreen"><span class="tag-preview" id="green-preview">Offering Help</span></label>
+                  </div>
+                  <div class="tag-option">
+                    <input type="checkbox" id="tagBlue">
+                    <label for="tagBlue"><span class="tag-preview" id="blue-preview">Water</span></label>
+                  </div>
+                  <div class="tag-option">
+                    <input type="checkbox" id="tagYellow">
+                    <label for="tagYellow"><span class="tag-preview" id="yellow-preview">Electricity</span></label>
+                  </div>
+                </div>
+                
+                <div class="post-actions">
+                  <button id="attachImageBtn">Attach Image</button>
+                  <button class="post-submit">Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
     </body>
 
@@ -434,6 +471,82 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     closeFilterModal();
+  });
+  
+  // Post Modal functionality
+  const postModal = document.getElementById("postModal");
+  const postCloseBtn = document.querySelector(".post-close");
+  const reportBtn = document.getElementById("report");
+  const postSubmitBtn = document.querySelector(".post-submit");
+  const postContent = document.getElementById('postContent');
+  const currentCount = document.getElementById('currentCount');
+  
+  postContent.addEventListener('input', function() {
+    const length = this.value.length;
+    currentCount.textContent = length;
+    
+    if (length > 250) {
+      currentCount.style.color = '#e50606';
+    } else {
+      currentCount.style.color = '';
+    }
+  });
+  
+  reportBtn.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    postModal.style.display = "flex";
+    postModal.style.opacity = "0";
+    
+    const postContainer = document.querySelector('.post-container');
+    postContainer.style.transform = "translateY(20px)";
+    
+    setTimeout(() => {
+      postModal.style.opacity = "1";
+      postContainer.style.transform = "translateY(0)";
+    }, 10);
+  });
+  
+  function closePostModal() {
+    const postContainer = document.querySelector('.post-container');
+    postContainer.style.transform = "translateY(20px)";
+    postModal.style.opacity = "0";
+    
+    setTimeout(() => {
+      postModal.style.display = "none";
+      document.getElementById("postContent").value = "";
+      currentCount.textContent = "0";
+      currentCount.style.color = '';
+      
+      document.getElementById("tagRed").checked = false;
+      document.getElementById("tagGreen").checked = false;
+      document.getElementById("tagBlue").checked = false;
+      document.getElementById("tagYellow").checked = false;
+    }, 300);
+  }
+  
+  postCloseBtn.addEventListener("click", function() {
+    closePostModal();
+  });
+  
+  postModal.addEventListener("click", function(e) {
+    if (e.target === postModal) {
+      closePostModal();
+    }
+  });
+  
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && postModal.style.display === "flex") {
+      closePostModal();
+    }
+  });
+  
+  postSubmitBtn.addEventListener("click", function() {
+    closePostModal();
+  });
+  
+  const attachImageBtn = document.getElementById("attachImageBtn");
+  attachImageBtn.addEventListener("click", function() {
   });
 });
     </script>
