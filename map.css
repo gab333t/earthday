@@ -440,7 +440,9 @@ h5 {
 
     .map-box {
         margin-left: 20px;
-        width: 92.25%;
+        margin-right: 20px;
+        width: calc(100% - 40px); 
+        height: auto;
         border-radius: 20px;
     }
 
