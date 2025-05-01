@@ -248,53 +248,82 @@
             <div class="alert-bg"></div>
         </div>
 
+        <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
+            <img class="modal-content" id="modalImg">
+        </div>
+
     </body>
 
     <script>
-        function setFavicon() {
-            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
-    
-            let favicon = document.querySelector("link[rel='icon']");
-            if (!favicon) {
-                favicon = document.createElement('link');
-                favicon.rel = 'icon';
-                document.head.appendChild(favicon);
-            }
-            favicon.href = faviconPath;
+    function setFavicon() {
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
+
+        let favicon = document.querySelector("link[rel='icon']");
+        if (!favicon) {
+            favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            document.head.appendChild(favicon);
         }
-    
-        setFavicon();
-    
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
-        
+        favicon.href = faviconPath;
+    }
+
+    setFavicon();
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+
+    document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImg");
         const closeBtn = document.getElementsByClassName("close")[0];
         
-        const postImages = document.getElementsByClassName("post-image");
-        for (let i = 0; i < postImages.length; i++) {
-            postImages[i].addEventListener("click", function(e) {
-                e.stopPropagation();
-                modal.style.display = "flex";
-                modalImg.src = this.src;
-            });
+        function openModal(imgSrc) {
+            modal.style.display = "flex";
+            modalImg.src = imgSrc;
+            modal.style.opacity = "0";
+            modalImg.style.transform = "translateY(20px)";
+            
+            setTimeout(() => {
+                modal.style.opacity = "1";
+                modalImg.style.transform = "translateY(0)";
+            }, 10);
         }
         
-        closeBtn.addEventListener("click", function() {
-            modal.style.display = "none";
+        function closeModal() {
+            modalImg.style.transform = "translateY(20px)";
+            modal.style.opacity = "0";
+            
+            setTimeout(() => {
+                modal.style.display = "none";
+            }, 300);
+        }
+        
+        const postImages = document.querySelectorAll(".post-image");
+        postImages.forEach(function(img) {
+            img.addEventListener("click", function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                openModal(this.src);
+            });
+        });
+        
+        closeBtn.addEventListener("click", function(e) {
+            e.preventDefault();
+            closeModal();
         });
         
         modal.addEventListener("click", function(e) {
             if (e.target === modal) {
-                modal.style.display = "none";
+                closeModal();
             }
         });
         
         document.addEventListener("keydown", function(e) {
             if (e.key === "Escape" && modal.style.display === "flex") {
-                modal.style.display = "none";
+                closeModal();
             }
         });
+    });
     </script>
 </html>

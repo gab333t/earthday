@@ -235,6 +235,8 @@ h5 > img, h5 input {
     background-color: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .modal-content {
@@ -243,6 +245,9 @@ h5 > img, h5 input {
     display: block;
     margin: auto;
     border-radius: 25px;
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .close {
@@ -253,6 +258,12 @@ h5 > img, h5 input {
     font-size: 40px;
     font-weight: bold;
     cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+}
+
+.close:hover {
+    opacity: 1;
 }
 
 #water {
