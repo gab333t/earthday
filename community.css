@@ -29,7 +29,7 @@ hr {
     margin-bottom: -20px;
 }
 
-#report {
+#report, #filter {
     width: 60px;
     height: auto;
     margin-right: 5px;
@@ -38,7 +38,7 @@ hr {
     transform-origin: center center;
 }
 
-#report:hover {
+#report:hover, #filter:hover {
     transform: scale(1.075);
 }
 
@@ -406,11 +406,11 @@ h5 > img, h5 input {
         margin-bottom: -35px;
     }
 
-    #report {
+    #report, #filter {
         width: 9.5vw;
     }
 
-    #report:hover {
+    #report:hover, #filter:hover {
         transform: scale(1);
     }
 
@@ -543,7 +543,7 @@ h5 > img, h5 input {
     }
 
     #topbold {
-        margin-bottom: 1vw;
+        margin-bottom: 2vw;
     }
 
     .logo {
@@ -650,6 +650,10 @@ h5 > img, h5 input {
 
     #report {
         content: url("img/report_dark.png");
+    }
+
+    #filter {
+        content: url("img/filter_dark.png");
     }
 
     #alert {
