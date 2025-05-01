@@ -15,11 +15,10 @@
     <body>
         <h1>Map</h1>
         <hr>
-
         <div class="report-container">
-            <h2></h2>
+            <img id="report" src="img/report_light.png" alt="Report Button" draggable="false">
+            <h2>Sort by Filters</h2>
         </div>
-
         <br>
         <img class="map-box" src="img/map_landscape_white.jpg" alt="Map of Manhattan, partially including Brooklyn" draggable="false">
         <div class="box-container">
@@ -73,24 +72,27 @@
             <div class="alert-circle"></div>
             <div class="alert-bg"></div>
         </div>
+
+        <br><br><br><br><br><br><br>
     </body>
+
     <script>
-function setFavicon() {
-    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
-
-    let favicon = document.querySelector("link[rel='icon']");
-    if (!favicon) {
-        favicon = document.createElement('link');
-        favicon.rel = 'icon';
-        document.head.appendChild(favicon);
-    }
-    favicon.href = faviconPath;
-}
-
-setFavicon();
-
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+        function setFavicon() {
+            const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const faviconPath = isDarkMode ? 'img/favicon_dark.ico' : 'img/favicon_light.ico';
+   
+            let favicon = document.querySelector("link[rel='icon']");
+            if (!favicon) {
+                favicon = document.createElement('link');
+                favicon.rel = 'icon';
+                document.head.appendChild(favicon);
+            }
+            favicon.href = faviconPath;
+        }
+   
+        setFavicon();
+   
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
 
 const mapBox = document.querySelector('.map-box');
 const container = document.createElement('div');
@@ -138,134 +140,76 @@ let isDragging = false;
 let startX, startY;
 let currentOffsetX = 0;
 let currentOffsetY = 0;
-let isAnimating = false;
-let animationFrameId = null;
-let targetScale = 1;
-let targetOffsetX = 0;
-let targetOffsetY = 0;
-
-function animateTransform(targetProps, duration = 300) {
-    if (isAnimating) {
-        cancelAnimationFrame(animationFrameId);
-    }
-    
-    isAnimating = true;
-    const startProps = {
-        scale: scale,
-        offsetX: offsetX,
-        offsetY: offsetY
-    };
-    
-    const startTime = performance.now();
-    
-    function animate(currentTime) {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeProgress = easeOutCubic(progress);
-        
-        scale = startProps.scale + (targetProps.scale - startProps.scale) * easeProgress;
-        offsetX = startProps.offsetX + (targetProps.offsetX - startProps.offsetX) * easeProgress;
-        offsetY = startProps.offsetY + (targetProps.offsetY - startProps.offsetY) * easeProgress;
-        
-        applyTransform();
-        
-        if (progress < 1) {
-            animationFrameId = requestAnimationFrame(animate);
-        } else {
-            isAnimating = false;
-        }
-    }
-    
-    animationFrameId = requestAnimationFrame(animate);
-}
-
-function easeOutCubic(t) {
-    return 1 - Math.pow(1 - t, 3);
-}
 
 function applyTransform() {
-    mapBox.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px) translateZ(0)`;
-}
-
-function checkBounds() {
-    const maxOffsetX = (scale - 1) * (mapBox.clientWidth / 2) / scale;
-    const maxOffsetY = (scale - 1) * (mapBox.clientHeight / 2) / scale;
-    
-    targetOffsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, targetOffsetX));
-    targetOffsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, targetOffsetY));
-    
-    if (targetScale <= MIN_SCALE) {
-        targetOffsetX = 0;
-        targetOffsetY = 0;
-    }
+    mapBox.style.transform = `scale(${scale}) translate(${offsetX}px, ${offsetY}px)`;
 }
 
 zoomInBtn.addEventListener('click', () => {
     if (scale < MAX_SCALE) {
-        targetScale = Math.min(scale + 0.5, MAX_SCALE);
+        scale += 0.2;
         checkBounds();
-        animateTransform({
-            scale: targetScale,
-            offsetX: targetOffsetX,
-            offsetY: targetOffsetY
-        });
+        applyTransform();
     }
 });
 
 zoomOutBtn.addEventListener('click', () => {
     if (scale > MIN_SCALE) {
-        targetScale = Math.max(scale - 0.5, MIN_SCALE);
+        scale -= 0.2;
         checkBounds();
-        animateTransform({
-            scale: targetScale,
-            offsetX: targetOffsetX,
-            offsetY: targetOffsetY
-        });
+        applyTransform();
     }
 });
 
-let lastDistance = 0;
-let initialScale = 1;
-let initialOffsetX = 0;
-let initialOffsetY = 0;
-let midX = 0;
-let midY = 0;
+function checkBounds() {
+    const maxOffsetX = (scale - 1) * (mapBox.clientWidth / 2) / scale;
+    const maxOffsetY = (scale - 1) * (mapBox.clientHeight / 2) / scale;
+    
+    offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX));
+    offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY));
+    
+    if (scale <= MIN_SCALE) {
+        offsetX = 0;
+        offsetY = 0;
+    }
+}
+
+mapBox.addEventListener('mousedown', (e) => {
+    if (scale > MIN_SCALE) {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        currentOffsetX = offsetX;
+        currentOffsetY = offsetY;
+        mapBox.style.cursor = 'grabbing';
+    }
+});
 
 mapBox.addEventListener('touchstart', (e) => {
-    if (e.touches.length === 1) {
+    if (scale > MIN_SCALE && e.touches.length === 1) {
         isDragging = true;
         startX = e.touches[0].clientX;
         startY = e.touches[0].clientY;
         currentOffsetX = offsetX;
         currentOffsetY = offsetY;
         e.preventDefault();
-    } else if (e.touches.length === 2) {
-        isDragging = false;
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        
-        lastDistance = Math.hypot(
-            touch2.clientX - touch1.clientX,
-            touch2.clientY - touch1.clientY
-        );
-        
-        midX = (touch1.clientX + touch2.clientX) / 2;
-        midY = (touch1.clientY + touch2.clientY) / 2;
-        
-        initialScale = scale;
-        initialOffsetX = offsetX;
-        initialOffsetY = offsetY;
-        
-        e.preventDefault();
     }
-}, { passive: false });
+});
 
-mapBox.addEventListener('touchmove', (e) => {
-    if (isAnimating) {
-        cancelAnimationFrame(animationFrameId);
-        isAnimating = false;
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        const dx = (e.clientX - startX) / scale;
+        const dy = (e.clientY - startY) / scale;
+        
+        offsetX = currentOffsetX + dx;
+        offsetY = currentOffsetY + dy;
+        
+        checkBounds();
+        applyTransform();
     }
-    
+});
+
+document.addEventListener('touchmove', (e) => {
     if (isDragging && e.touches.length === 1) {
         const dx = (e.touches[0].clientX - startX) / scale;
         const dy = (e.touches[0].clientY - startY) / scale;
@@ -273,57 +217,46 @@ mapBox.addEventListener('touchmove', (e) => {
         offsetX = currentOffsetX + dx;
         offsetY = currentOffsetY + dy;
         
-        const maxOffsetX = (scale - 1) * (mapBox.clientWidth / 2) / scale;
-        const maxOffsetY = (scale - 1) * (mapBox.clientHeight / 2) / scale;
-        
-        offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX));
-        offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY));
-        
-        applyTransform();
-        e.preventDefault();
-    } else if (e.touches.length === 2) {
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        
-        const newDistance = Math.hypot(
-            touch2.clientX - touch1.clientX,
-            touch2.clientY - touch1.clientY
-        );
-        
-        const newMidX = (touch1.clientX + touch2.clientX) / 2;
-        const newMidY = (touch1.clientY + touch2.clientY) / 2;
-        
-        const scaleChange = newDistance / lastDistance;
-        const newScale = Math.min(Math.max(initialScale * scaleChange, MIN_SCALE), MAX_SCALE);
-        
-        scale = newScale;
-        
-        offsetX = initialOffsetX + (midX - newMidX) / scale;
-        offsetY = initialOffsetY + (midY - newMidY) / scale;
-        
-        const maxOffsetX = (scale - 1) * (mapBox.clientWidth / 2) / scale;
-        const maxOffsetY = (scale - 1) * (mapBox.clientHeight / 2) / scale;
-        
-        offsetX = Math.max(-maxOffsetX, Math.min(maxOffsetX, offsetX));
-        offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, offsetY));
-        
+        checkBounds();
         applyTransform();
         e.preventDefault();
     }
-}, { passive: false });
+});
 
-mapBox.addEventListener('touchend', (e) => {
-    if (e.touches.length === 0) {
-        isDragging = false;
-        
-        if (scale < MIN_SCALE + 0.1) {
-            animateTransform({
-                scale: MIN_SCALE,
-                offsetX: 0,
-                offsetY: 0
-            });
-        }
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+    mapBox.style.cursor = 'grab';
+});
+
+document.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+if (scale > MIN_SCALE) {
+    mapBox.style.cursor = 'grab';
+}
+
+applyTransform();
+
+mapBox.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    
+    const rect = mapBox.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    
+    if (e.deltaY < 0 && scale < MAX_SCALE) {
+        scale += 0.2;
+    } else if (e.deltaY > 0 && scale > MIN_SCALE) {
+        scale -= 0.2;
+    } else {
+        return;
     }
+    
+    checkBounds();
+    applyTransform();
+    
+    mapBox.style.cursor = scale > MIN_SCALE ? 'grab' : 'default';
 });
 
 let lastTap = 0;
@@ -331,78 +264,19 @@ mapBox.addEventListener('touchend', (e) => {
     const currentTime = new Date().getTime();
     const tapLength = currentTime - lastTap;
     
-    if (tapLength < 300 && tapLength > 0 && e.touches.length === 0) {
-        if (scale < MAX_SCALE - 0.1) {
-            targetScale = Math.min(scale * 2, MAX_SCALE);
-            
-            if (e.changedTouches && e.changedTouches.length > 0) {
-                const touch = e.changedTouches[0];
-                const rect = mapBox.getBoundingClientRect();
-                
-                const tapX = touch.clientX - rect.left - rect.width / 2;
-                const tapY = touch.clientY - rect.top - rect.height / 2;
-                
-                targetOffsetX = offsetX - tapX / (scale * rect.width) * 2;
-                targetOffsetY = offsetY - tapY / (scale * rect.height) * 2;
-            } else {
-                targetOffsetX = offsetX;
-                targetOffsetY = offsetY;
-            }
+    if (tapLength < 300 && tapLength > 0) {
+        if (scale < MAX_SCALE) {
+            scale += 0.4; 
         } else {
-            targetScale = MIN_SCALE;
-            targetOffsetX = 0;
-            targetOffsetY = 0;
+            scale = MIN_SCALE;
         }
         
         checkBounds();
-        animateTransform({
-            scale: targetScale,
-            offsetX: targetOffsetX,
-            offsetY: targetOffsetY
-        });
-        
+        applyTransform();
         e.preventDefault();
     }
     
     lastTap = currentTime;
-});
-
-mapBox.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    
-    if (isAnimating) {
-        cancelAnimationFrame(animationFrameId);
-        isAnimating = false;
-    }
-    
-    const rect = mapBox.getBoundingClientRect();
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    
-    const wheelDelta = e.deltaY < 0 ? 1 : -1;
-    targetScale = Math.min(Math.max(scale + wheelDelta * 0.2, MIN_SCALE), MAX_SCALE);
-    
-    if (targetScale !== scale) {
-        const cursorX = mouseX - rect.width / 2;
-        const cursorY = mouseY - rect.height / 2;
-        
-        targetOffsetX = offsetX - cursorX / (scale * rect.width) * (targetScale - scale) * 2;
-        targetOffsetY = offsetY - cursorY / (scale * rect.height) * (targetScale - scale) * 2;
-        
-        checkBounds();
-        animateTransform({
-            scale: targetScale,
-            offsetX: targetOffsetX,
-            offsetY: targetOffsetY
-        });
-    }
-    
-    mapBox.style.cursor = targetScale > MIN_SCALE ? 'grab' : 'default';
-}, { passive: false });
-
-document.addEventListener('mouseup', () => {
-    isDragging = false;
-    mapBox.style.cursor = scale > MIN_SCALE ? 'grab' : 'default';
 });
 
 function updateZoomIcons() {
@@ -416,8 +290,7 @@ function updateZoomIcons() {
 }
 
 updateZoomIcons();
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateZoomIcons);
 
-applyTransform();
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateZoomIcons);
     </script>
 </html>
